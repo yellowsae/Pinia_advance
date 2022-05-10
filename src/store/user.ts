@@ -9,6 +9,7 @@ import { defineStore } from "pinia";
 interface Person {
   name: string;
   age?: number;
+  gender: string;
 }
 
 export const userUserStore = defineStore('user', {
@@ -19,7 +20,8 @@ export const userUserStore = defineStore('user', {
   state: (): Person => {
     return {
       name: 'Yellow-sea',
-      age: 123
+      age: 123,
+      gender: '男'
     }
   },
 
@@ -49,6 +51,31 @@ export const userUserStore = defineStore('user', {
 
     getProps(props: string) {
       console.log(props)
+    },
+
+    // 在 actions 中的方法可以相互调用 ， 直接用 this 访问即可。
+    setData() {
+      // 相互调用
+      this.changeState()
+      this.getProps('Hidie@@@@@')
     }
+  },
+
+  // 在引入数据持久化后
+  // 开启数据缓存
+  persist: {
+    // 数据默认存在 sessionStorage 里，并且会以 store 的 id 作为 key。
+
+    enabled: true,
+    // 自定义 key
+    // 默认所有 state 都会进行缓存，你可以通过 paths 指定要持久化的字段，其他的则不会进行持久化。
+    strategies: [
+      {
+        key: 'my_user', // 指定 key 值
+        storage: localStorage,  // 指定存储到 localStorage
+        paths: ['name', 'age'],  // 需要进行缓存的数据
+      }
+    ]
   }
+
 })
