@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 
+import { InfoStore } from "./info"
 // export const userUserStore = defineStore({
 //   id: 'user', // id 必填
 // })
@@ -37,6 +38,11 @@ export const userUserStore = defineStore('user', {
     },
     lastName(state): string {
       return state.name.split('-')[1]
+    },
+
+    // 使用引入的 其他的 store 数据
+    getTableList() {
+      return InfoStore().TestList
     }
   },
 
@@ -58,7 +64,7 @@ export const userUserStore = defineStore('user', {
       // 相互调用
       this.changeState()
       this.getProps('Hidie@@@@@')
-    }
+    },
   },
 
   // 在引入数据持久化后

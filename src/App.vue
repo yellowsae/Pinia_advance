@@ -12,7 +12,7 @@ const store = userUserStore()
 // console.log(name)  // 得到普通的 字符串  "Yellow-sea" 不具有响应性
 
 // 使用 storeToRefs 解构
-const {name} = storeToRefs(store);  // 使用storeToRefs
+const { name } = storeToRefs(store);  // 使用storeToRefs
 console.log(name) // 得到 ObjectRefImpl 的对象 name  具备响应性
 
 // 也可在vue中使用 计算属性访问 属性
@@ -37,13 +37,19 @@ const Uname = computed(() => store.name)
   <h2>Action 绑定的方法</h2>
   <button @click="store.changeState">changeStore</button>
   <button @click="store.getProps('NewIndex')">changeStore</button>
-  
+
   <h2>Vue计算属性： {{ Uname }}</h2>
 
   <hr>
 
   <h2>actions中方法相互调用</h2>
   <button @click="store.setData">setData</button>
+
+
+  <h2>使用引入的文件的store</h2>
+  <ul v-for="index in store.getTableList">
+    <li>{{ index }}</li>
+  </ul>
 </template>
 
 <style>
